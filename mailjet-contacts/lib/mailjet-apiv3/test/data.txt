@@ -1,0 +1,63 @@
+Result for Account digitalAboarray(1) {
+  [0]=>
+  array(13) {
+    ["CreatedAt"]=>
+    string(20) "2018-09-19T10:52:23Z"
+    ["DeliveredCount"]=>
+    int(1)
+    ["Email"]=>
+    string(21) "milan.bargiel@zeit.de"
+    ["ExclusionFromCampaignsUpdatedAt"]=>
+    string(0) ""
+    ["ID"]=>
+    int(1781235358)
+    ["IsExcludedFromCampaigns"]=>
+    bool(false)
+    ["IsOptInPending"]=>
+    bool(false)
+    ["IsSpamComplaining"]=>
+    bool(false)
+    ["LastActivityAt"]=>
+    string(20) "2018-12-10T14:34:12Z"
+    ["LastUpdateAt"]=>
+    string(20) "2018-09-19T10:52:23Z"
+    ["Name"]=>
+    string(0) ""
+    ["UnsubscribedAt"]=>
+    string(0) ""
+    ["UnsubscribedBy"]=>
+    string(0) ""
+  }
+}
+Result for Account redaktionellerNewsltterarray(1) {
+  [0]=>
+  array(13) {
+    ["CreatedAt"]=>
+    string(20) "2018-09-18T13:37:48Z"
+    ["DeliveredCount"]=>
+    int(0)
+    ["Email"]=>
+    string(21) "milan.bargiel@zeit.de"
+    ["ExclusionFromCampaignsUpdatedAt"]=>
+    string(0) ""
+    ["ID"]=>
+    int(31988942)
+    ["IsExcludedFromCampaigns"]=>
+    bool(false)
+    ["IsOptInPending"]=>
+    bool(false)
+    ["IsSpamComplaining"]=>
+    bool(false)
+    ["LastActivityAt"]=>
+    string(20) "2019-01-17T12:24:10Z"
+    ["LastUpdateAt"]=>
+    string(20) "2019-01-17T12:24:10Z"
+    ["Name"]=>
+    string(10) "milanlaros"
+    ["UnsubscribedAt"]=>
+    string(0) ""
+    ["UnsubscribedBy"]=>
+    string(0) ""
+  }
+}
+

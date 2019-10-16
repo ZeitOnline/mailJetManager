@@ -1,0 +1,1 @@
+{"nfs":{"/vagrant":{"type":"nfs","guestpath":"/vagrant","hostpath":"/Users/ehlers/zeit-mailjet-contacts","disabled":false,"__vagrantfile":true,"map_uid":1985455369,"map_gid":1553137583,"nfs_version":3,"nfs_udp":true,"uuid":"1262832964"}}}
