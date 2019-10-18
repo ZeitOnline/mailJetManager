@@ -7,11 +7,12 @@ use \Mailjet\Resources;
 
 include_once('../conf/mailjet.conf'); 
 include_once('../lib/mailjetFunctions.php'); 
+include('../lib/json_to_postgres.php'); 
 
 
 $importtime = time();
 $l = 0;
-
+$a = 0;
 
 
 // iterate through all API-Keys set in mailjet.conf
@@ -27,20 +28,31 @@ $l = 0;
 		if (!$pid) 
 	    {
 			//	find email address in address lists
-			echo date('Y-m-d h:m', $importtime)."working on: ". $accountName;
-			$result = getallContacts($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE);
-//			$result = getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE);
-	
-
-//	var_dump($result);
-	
+			echo "\n\n".date('Y-m-d h:m', $importtime)."working on: ". $accountName."\n";
+			$result 	= getallContacts($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE);			
+//var_dump($result);
 			if(count($result) > 0)
 			{
-				include('../lib/json_to_postgres.php'); 
+				$staus = storeContacts($result,$importtime,$accountName);
 			}
-			exit($l);
+			
+		exit($l);
 		}
 		$l++;
+
+		$pid = pcntl_fork();
+		if (!$pid) 
+	    {
+			//	find email address in address lists
+			echo "\n\n".date('Y-m-d h:m', $importtime)."working on details: ". $accountName."\n";
+			$resultstat = getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE);
+			if(count($resultstat) > 0)
+			{
+				$staus = storeContactsDetails($resultstat,$importtime,$accountName);
+			}
+		exit($a);
+		}
+		$a++;
 
 	echo "\n";
 	}

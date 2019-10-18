@@ -112,6 +112,54 @@ echo "\n... fetching ". $overallCount . " records ...";
 	return $data;
 }
 
+
+function getallContactstats2($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE)
+{
+
+
+	$mj = new \Mailjet\Client($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE);
+
+	// first get count of records for cureent APIKEY to calculate loop count
+	$filters = [
+	  'countOnly' => 1
+	];
+
+
+	$response = $mj->get(Resources::$Listrecipientstatistics, ['filters' => $filters]);
+	$response->success();
+	$overallCount = $response->getCount();
+	
+	if(!$overallCount)
+	{
+
+		$overallCount = 0;
+	}
+echo "\n... fetching ". $overallCount . " records ...";
+	// now get all data and save it in array data
+	$tmpArray = false;
+	$data = array();
+	$loops = $overallCount/1000;
+	for($callno=0; $callno < $loops; $callno++)
+	{
+	// declare filter with 1000 records (whichb ist maximum) and offset for next loop run
+		$filters = [
+	  				'Limit' => 1000,
+	  				'Offset' => $callno*1000,
+	  				'ShowExtraData' => true
+					];
+
+
+		$response = $mj->get(Resources::$Listrecipientstatistics, ['filters' => $filters]);
+		$response->success() && $tmpArray = $response->getData();
+		if($tmpArray)
+			$data = array_merge($data, $tmpArray);
+		
+		
+	}
+	
+	return $data;
+}
+
 function findContact($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE, $email)
 {
 	$data = false;
