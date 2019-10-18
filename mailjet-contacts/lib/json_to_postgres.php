@@ -1,31 +1,22 @@
 <?php 
-	# Configure
-	$DB_USER = 'mailjet';
-	$DB_PASS = 'mailjet2019!';
-	$DB_HOST = 'mailjet.zeit.de';
-	$DB_NAME = 'mailjet';
-	// Param 3 when ran in shell will override this value
-	$DB_TABLE = 'contacts.contact'; 
-	// Param 2 when ran in shell will override this value
-	$CATEGORY = 'misc';
 	
 	// ===============================
 	// = Do NOT Edit Below This Line =
 	// ===============================
 	
 	# Params
+	
 	$CURRENT_SCRIPT = $argv[0];
-	$JSON_FILE = $argv[1];
-	$CATEGORY = isset($argv[2]) ? $argv[2]:$CATEGORY;
+	//$CATEGORY = isset($argv[2]) ? $argv[2]:$CATEGORY;
 	$POSTGRE_TABLE = isset($argv[3]) ? $argv[3]:$DB_TABLE;
-
+	
 	
 
 	# Open our file
 	//$f = file_get_contents($JSON_FILE);
-	$f = json_encode($result);
+	//$f = json_encode($result);
 	# Make sure file is good
-	if( $f === FALSE )
+	if( json_encode($result) === FALSE )
 	{
 		die('Could not open json.');
 	}
@@ -37,14 +28,13 @@
 	}
 	
 	# Decode JSON into array
-	$points = json_decode( $f, true );
+	//$points = json_decode( $f, true );
 	
 	# Iterate our points
-	foreach($points as $p)
+	foreach($result as $p)
 	{
-		//var_dump($p);
-		# Sanatize
-			$p['accountName']						= str_replace("'","\'",$accountName);	//				-> string
+		# Sanatize response from endpoint contact
+			$p['accountName']						= str_replace("'"," ",$accountName);	//				-> string
 //			$p['CreatedAt'] 						-> date with timestamp
 //			$p['DeliveredCount'] 					-> int
 //			$p['Email'] 							-> string
@@ -55,19 +45,67 @@
 //			$p['IsSpamComplaining']					-> bool
 //			$p['LastActivityAt']					-> date with timestamp
 //			$p['LastUpdateAt']						-> date with timestamp
-			$p['Name']								= str_replace("'","\'",$p['Name']); 						//-> string
+			$p['Name']								= str_replace("'"," ",$p['Name']); 						//-> string
 //			$p['UnsubscribedAt']					-> string
-			$p['UnsubscribedBy']					= str_replace("'","\'",$p['UnsubscribedBy']); 				//-> string
+			$p['UnsubscribedBy']					= str_replace("'"," ",$p['UnsubscribedBy']); 				//-> string
 			
 
 
-		
-		/* Insert into DB
-		pg_query($dbconn,"INSERT INTO $POSTGRE_TABLE (accountname,createdat,deliveredcount,email,exclusionfromcampaignsupdatedat,id,isexcludedfromcampaigns,isoptinpending,isspamcomplaining,lastactivityat,lastupdateat,name,unsubscribedat,unsubscribedby) VALUES ( '".$accountName."', '".$p['CreatedAt']."', '".$p['DeliveredCount']."', '".$p['Email']."', '".$p['ExclusionFromCampaignsUpdatedAt']."','".$p['ID']."', '".$p['IsExcludedFromCampaigns']."', '".$p['IsOptInPending']."', '".$p['IsSpamComplaining']."', '".$p['LastActivityAt']."', '".$p['LastUpdateAt']."', '".$p['Name']."', '".$p['UnsubscribedAt']."', '".$p['UnsubscribedBy']."')") or die("Could not execute this insert statement: ".pg_last_error());
-		*/
-
-
 		# Insert or update DB
-		pg_query($dbconn, "INSERT INTO $POSTGRE_TABLE (accountname,createdat,deliveredcount,email,exclusionfromcampaignsupdatedat,id,isexcludedfromcampaigns,isoptinpending,isspamcomplaining,lastactivityat,lastupdateat,name,unsubscribedat,unsubscribedby) VALUES ( '".$accountName."', '".$p['CreatedAt']."', '".$p['DeliveredCount']."', '".$p['Email']."', '".$p['ExclusionFromCampaignsUpdatedAt']."','".$p['ID']."', '".$p['IsExcludedFromCampaigns']."', '".$p['IsOptInPending']."', '".$p['IsSpamComplaining']."', '".$p['LastActivityAt']."', '".$p['LastUpdateAt']."', '".$p['Name']."', '".$p['UnsubscribedAt']."', '".$p['UnsubscribedBy']."') ON CONFLICT ON CONSTRAINT accountname_email DO UPDATE SET accountname = '".$accountName."', createdat = '".$p['CreatedAt']."', deliveredcount = '".$p['DeliveredCount']."', email = '".$p['Email']."', exclusionfromcampaignsupdatedat = '".$p['ExclusionFromCampaignsUpdatedAt']."', id = '".$p['ID']."', isexcludedfromcampaigns = '".$p['IsExcludedFromCampaigns']."', isoptinpending = '".$p['IsOptInPending']."', isspamcomplaining = '".$p['IsSpamComplaining']."', lastactivityat = '".$p['LastActivityAt']."', lastupdateat = '".$p['LastUpdateAt']."', name = '".$p['Name']."', unsubscribedat = '".$p['UnsubscribedAt']."', unsubscribedby = '".$p['UnsubscribedBy']."' ;") or die("Could not execute this insert statement: ".pg_last_error());
+		pg_query($dbconn, "INSERT INTO $POSTGRE_TABLE (importtime,accountname,createdat,deliveredcount,email,exclusionfromcampaignsupdatedat,id,isexcludedfromcampaigns,isoptinpending,isspamcomplaining,lastactivityat,lastupdateat,name,unsubscribedat,unsubscribedby) VALUES ('".$importtime."', '".$accountName."', '".$p['CreatedAt']."', '".$p['DeliveredCount']."', '".$p['Email']."', '".$p['ExclusionFromCampaignsUpdatedAt']."','".$p['ID']."', '".$p['IsExcludedFromCampaigns']."', '".$p['IsOptInPending']."', '".$p['IsSpamComplaining']."', '".$p['LastActivityAt']."', '".$p['LastUpdateAt']."', '".$p['Name']."', '".$p['UnsubscribedAt']."', '".$p['UnsubscribedBy']."') ON CONFLICT ON CONSTRAINT accountname_email DO UPDATE SET importtime = '".$importtime."', accountname = '".$accountName."', createdat = '".$p['CreatedAt']."', deliveredcount = '".$p['DeliveredCount']."', email = '".$p['Email']."', exclusionfromcampaignsupdatedat = '".$p['ExclusionFromCampaignsUpdatedAt']."', id = '".$p['ID']."', isexcludedfromcampaigns = '".$p['IsExcludedFromCampaigns']."', isoptinpending = '".$p['IsOptInPending']."', isspamcomplaining = '".$p['IsSpamComplaining']."', lastactivityat = '".$p['LastActivityAt']."', lastupdateat = '".$p['LastUpdateAt']."', name = '".$p['Name']."', unsubscribedat = '".$p['UnsubscribedAt']."', unsubscribedby = '".$p['UnsubscribedBy']."' ;") or die("Could not execute this insert statement: ".pg_last_error());
+
+		# Delete all records from account which where not present in json file by importtime
+
+		pg_query($dbconn, "DELETE FROM $POSTGRE_TABLE WHERE accountname = '$accountName' AND importtime < '$importtime'") or die("Could not execute this delete statement: ".pg_last_error());
+
 	}
+
+/*
+	# Iterate our points
+	foreach($result as $p)
+	{
+		/* # Sanatize response from endpoint contactstatistics
+		array(18) {
+    ["BlockedCount"]=>
+    int(0)
+    ["BouncedCount"]=>
+    int(0)
+    ["ClickedCount"]=>
+    int(0)
+    ["ContactID"]=>
+    int(1863415158)
+    ["DeferredCount"]=>
+    int(0)
+    ["DeliveredCount"]=>
+    int(0)
+    ["HardBouncedCount"]=>
+    int(0)
+    ["LastActivityAt"]=>
+    string(0) ""
+    ["MarketingContacts"]=>
+    int(0)
+    ["OpenedCount"]=>
+    int(0)
+    ["PreQueuedCount"]=>
+    int(0)
+    ["ProcessedCount"]=>
+    int(0)
+    ["QueuedCount"]=>
+    int(0)
+    ["SoftBouncedCount"]=>
+    int(0)
+    ["SpamComplaintCount"]=>
+    int(0)
+    ["UnsubscribedCount"]=>
+    int(0)
+    ["UserMarketingContacts"]=>
+    int(0)
+    ["WorkFlowExitedCount"]=>
+    int(0)
+  }
+
+		
+
+	}
+*/
 ?>
