@@ -1,9 +1,8 @@
 <?php
-/*
+
 require '../lib/mailjet-apiv3/vendor/autoload.php';
-
 use \Mailjet\Resources;
-
+/*
 
 
 you can see 3 type of ID:
