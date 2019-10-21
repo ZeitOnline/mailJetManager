@@ -670,4 +670,184 @@ cloud-init[1103]: ci-info: +-------+--------------+----------+---------------+--
 
 Ubuntu 16.04.6 LTS ubuntu-xenial ttyS0
 
-ubuntu-xenial login: 
+ubuntu-xenial login: [57033.846881] e1000 0000:00:03.0 enp0s3: Detected Tx Unit Hang
+[57033.846881]   Tx Queue             <0>
+[57033.846881]   TDH                  <e6>
+[57033.846881]   TDT                  <e8>
+[57033.846881]   next_to_use          <e8>
+[57033.846881]   next_to_clean        <e6>
+[57033.846881] buffer_info[next_to_clean]
+[57033.846881]   time_stamp           <100d86a8d>
+[57033.846881]   next_to_watch        <e7>
+[57033.846881]   jiffies              <100d86d5e>
+[57033.846881]   next_to_watch.status <0>
+[57035.850148] e1000 0000:00:03.0 enp0s3: Detected Tx Unit Hang
+[57035.850148]   Tx Queue             <0>
+[57035.850148]   TDH                  <e6>
+[57035.850148]   TDT                  <e8>
+[57035.850148]   next_to_use          <e8>
+[57035.850148]   next_to_clean        <e6>
+[57035.850148] buffer_info[next_to_clean]
+[57035.850148]   time_stamp           <100d86a8d>
+[57035.850148]   next_to_watch        <e7>
+[57035.850148]   jiffies              <100d86f53>
+[57035.850148]   next_to_watch.status <0>
+[57037.863391] e1000 0000:00:03.0 enp0s3: Detected Tx Unit Hang
+[57037.863391]   Tx Queue             <0>
+[57037.863391]   TDH                  <e6>
+[57037.863391]   TDT                  <e8>
+[57037.863391]   next_to_use          <e8>
+[57037.863391]   next_to_clean        <e6>
+[57037.863391] buffer_info[next_to_clean]
+[57037.863391]   time_stamp           <100d86a8d>
+[57037.863391]   next_to_watch        <e7>
+[57037.863391]   jiffies              <100d8714a>
+[57037.863391]   next_to_watch.status <0>
+[57039.874413] e1000 0000:00:03.0 enp0s3: Detected Tx Unit Hang
+[57039.874413]   Tx Queue             <0>
+[57039.874413]   TDH                  <e6>
+[57039.874413]   TDT                  <e8>
+[57039.874413]   next_to_use          <e8>
+[57039.874413]   next_to_clean        <e6>
+[57039.874413] buffer_info[next_to_clean]
+[57039.874413]   time_stamp           <100d86a8d>
+[57039.874413]   next_to_watch        <e7>
+[57039.874413]   jiffies              <100d87341>
+[57039.874413]   next_to_watch.status <0>
+[57040.574460] e1000 0000:00:03.0 enp0s3: Reset adapter
+         Stopping Authenticate and Authorize Users to Run Privileged Tasks...
+[[0;32m  OK  [0m] Stopped target RPC Port Mapper.
+[[0;32m  OK  [0m] Closed Load/Save RF Kill Switch Status /dev/rfkill Watch.
+[[0;32m  OK  [0m] Stopped target Cloud-init target.
+[[0;32m  OK  [0m] Stopped target Graphical Interface.
+         Unmounting RPC Pipe File System...
+         Stopping User Manager for UID 1000...
+[[0;32m  OK  [0m] Stopped Execute cloud user/final scripts.
+[[0;32m  OK  [0m] Stopped Apply the settings specified in cloud-config.
+[[0;32m  OK  [0m] Stopped target Cloud-config availability.
+         Stopping NFS status monitor for NFSv2/3 locking....
+         Stopping Session 638 of user vagrant.
+         Stopping Session 8 of user vagrant.
+[[0;32m  OK  [0m] Stopped target Multi-User System.
+         Stopping Regular background program processing daemon...
+[[0;32m  OK  [0m] Stopped PostgreSQL RDBMS.
+         Stopping Deferred execution scheduler...
+         Stopping FUSE filesystem for LXC...
+         Stopping LSB: Apache2 web server...
+         Stopping LSB: Start/stop sysstat's sadc...
+         Stopping The PHP 7.0 FastCGI Process Manager...
+         Stopping LSB: automatic crash report generation...
+         Stopping Virtualbox guest utils...
+         Stopping OpenBSD Secure Shell server...
+         Stopping LXD - container startup/shutdown...
+[[0;32m  OK  [0m] Stopped target Login Prompts.
+         Stopping Getty on tty1...
+         Stopping Serial Getty o         Stopping LSB: daemon to balance interrupts for SMP systems...
+         Stopping Unattended Upgrades Shutdown...
+         Stopping LSB: MD monitoring daemon...
+         Stopping LSB: Set the CPU Frequency Scaling governor to "ondemand"...
+         Stopping System Logging Service...
+         Stopping D-Bus System Message Bus...
+[[0;32m  OK  [0m] Stopped Wait until snapd is fully seeded.
+[[0;32m  OK  [0m] Stopped target Timers.
+[[0;32m  OK  [0m] Stopped Daily Cleanup of Temporary Directories.
+[[0;32m  OK  [0m] Stopped Daily apt upgrade and clean activities.
+[[0;32m  OK  [0m] Stopped Daily apt download activities.
+[[0;32m  OK  [0m] Stopped target System Time Synchronized.
+         Stopping PostgreSQL Cluster 9.5-main...
+         Stopping ACPI event daemon...
+         Stopping LSB: Record successful boot for GRUB...
+         Stopping Accounts Service...
+[[0;32m  OK  [0m] Unmounted /var/lib/lxcfs.
+[[0;32m  OK  [0m] Stopped Regular background program processing daemon.
+[[0;32m  OK  [0m] Stopped Accounts Service.
+[[0;32m  OK  [0m] Stopped ACPI event daemon.
+[[0;32m  OK  [0m] Stopped Deferred execution scheduler.
+[[0;32m  OK  [0m] Stopped System Logging Service.
+[[0;32m  OK  [0m] Stopped OpenBSD Secure Shell server.
+[[0;32m  OK  [0m] Stopped Authenticate and Authorize Users to Run Privileged Tasks.
+[[0;32m  OK  [0m] Stopped Unattended Upgrades Shutdown.
+[[0;32m  OK  [0m] Stopped The PHP 7.0 FastCGI Process Manager.
+[[0;32m  OK  [0m] Stopped Getty on tty1.
+[[0;32m  OK  [0m] Stopped Serial Getty on ttyS0.
+[[0;32m  OK  [0m] Stopped NFS status monitor for NFSv2/3 locking..
+[[0;32m  OK  [0m] Stopped User Manager for UID 1000.
+[[0;32m  OK  [0m] Unmounted RPC Pipe File System.
+[[0;32m  OK  [0m] Stopped D-Bus System Message Bus.
+[[0;32m  OK  [0m] Stopped Session 638 of user vagrant.
+[[0;32m  OK  [0m] Stopped Session 8 of user vagrant.
+[[0;32m  OK  [0m] Stopped FUSE filesystem for LXC.
+[[0;32m  OK  [0m] Stopped LSB: Start/stop sysstat's sadc.
+[[0;32m  OK  [0m] Stopped LXD - container startup/shutdown.
+[[0;32m  OK  [0m] Stopped LSB: Set the CPU Frequency Scaling governor to "ondemand".
+[[0;32m  OK  [0m] Stopped LSB: daemon to balance interrupts for SMP systems.
+[[0;32m  OK  [0m] Stopped LSB: automatic crash report generation.
+[[0;32m  OK  [0m] Stopped LSB: MD monitoring daemon.
+[[0;32m  OK  [0m] Stopped Virtualbox guest utils.
+[[0;32m  OK  [0m] Stopped LSB: Record successful boot for GRUB.
+[[0;32m  OK  [0m] Removed slice User Slice of vagrant.
+[[0;32m  OK  [0m] Removed slice system-serial\x2dgetty.slice.
+[[0;32m  OK  [0m] Stopped /etc/rc.local Compatibility.
+[[0;32m  OK  [0m] Removed slice system-getty.slice.
+         Stopping Permit User Sessions...
+         Stopping Login Service...
+[[0;32m  OK  [0m] Stopped Permit User Sessions.
+[[0;32m  OK  [0m] Stopped Login Service.
+[[0;32m  OK  [0m] Stopped target User and Group Name Lookups.
+[[0;32m  OK  [0m] Stopped PostgreSQL Cluster 9.5-main.
+[[0;32m  OK  [0m] Removed slice system-postgresql.slice.
+[[0;32m  OK  [0m] Stopped LSB: Apache2 web server.
+[[0;32m  OK  [0m] Stopped target Basic System.
+[[0;32m  OK  [0m] Stopped target Slices.
+[[0;32m  OK  [0m] Removed slice User and Session Slice.
+[[0;32m  OK  [0m] Stopped target Paths.
+[[0;32m  OK  [0m] Stopped ACPI Events Check.
+[[0;32m  OK  [0m] Stopped Dispatch Password Requests to Console Directory Watch.
+[[0;32m  OK  [0m] Stopped Forward Password Requests to Wall Directory Watch.
+[[0;32m  OK  [0m] Stopped target Sockets.
+[[0;32m  OK  [0m] Closed UUID daemon activation socket.
+[[0;32m  OK  [0m] Closed ACPID Listen Socket.
+[[0;32m  OK  [0m] Closed Socket activation for snappy daemon.
+[[0;32m  OK  [0m] Closed D-Bus System Message Bus Socket.
+[[0;32m  OK  [0m] Closed Syslog Socket.
+[[0;32m  OK  [0m] Closed LXD - unix socket.
+[[0;32m  OK  [0m] Stopped target Remote File Systems.
+         Unmounting /vagrant...
+[[0;32m  OK  [0m] Stopped target Host and Network Name Lookups.
+[[0;32m  OK  [0m] Unmounted /vagrant.
+[[0;32m  OK  [0m] Stopped target Remote File Systems (Pre).
+         Stopping Login to default iSCSI targets...
+[[0;32m  OK  [0m] Stopped target NFS client services.
+         Stopping RPC bind portmap service...
+[[0;32m  OK  [0m] Stopped RPC bind portmap service.
+[[0;32m  OK  [0m] Closed RPCbind Server Activation Socket.
+[[0;32m  OK  [0m] Stopped target System Initialization.
+[[0;32m  OK  [0m] Stopped target Encrypted Volumes.
+         Stopping Load/Save Random Seed...
+[[0;32m  OK  [0m] Stopped target Swap.
+         Stopping Update UTMP about System Boot/Shutdown...
+[[0;32m  OK  [0m] Stopped Load/Save Random Seed.
+[[0;32m  OK  [0m] Stopped Update UTMP about System Boot/Shutdown.
+[[0;32m  OK  [0m] Stopped Create Volatile Files and Directories.
+[[0;32m  OK  [0m] Stopped Login to default iSCSI targets.
+         Stopping iSCSI initiator daemon (iscsid)...
+[[0;32m  OK  [0m] Stopped iSCSI initiator daemon (iscsid).
+[[0;32m  OK  [0m] Stopped target Network is Online.
+[[0;32m  OK  [0m] Stopped Initial cloud-init job (metadata service crawler).
+[[0;32m  OK  [0m] Stopped target Network.
+         Stopping Raise network interfaces...
+[[0;32m  OK  [0m] Stopped Raise network interfaces.
+[[0;32m  OK  [0m] Stopped target Network (Pre).
+[[0;32m  OK  [0m] Stopped Initial cloud-init job (pre-networking).
+[[0;32m  OK  [0m] Stopped Apply Kernel Variables.
+[[0;32m  OK  [0m] Stopped Load Kernel Modules.
+[[0;32m  OK  [0m] Stopped target Local File Systems.
+         Unmounting /run/user/1000...
+[[0;32m  OK  [0m] Unmounted /run/user/1000.
+[[0;32m  OK  [0m] Reached target Unmount All Filesystems.
+[[0;32m  OK  [0m] Stopped target Local File Systems (Pre).
+         Stopping Monitoring of LVM2 mirrors... dmeventd or progress polling...
+[[0;32m  OK  [0m] Stopped Remount Root and Kernel File Systems.
+[[0;32m  OK  [0m] Stopped Create Static Device Nodes in /dev.
+[[0;32m  OK  [0m] Reached target Shutdown.
+[249625.588720] reboot: Power down
