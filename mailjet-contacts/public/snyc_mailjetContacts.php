@@ -14,7 +14,7 @@ $importtime = time();
 $l = 0;
 $a = 0;
 
-
+echo "\n\n".date('Y-m-d h:m', $importtime);
 // iterate through all API-Keys set in mailjet.conf
 	for($i=0; $i<count($MJ_KEYS); $i++)
 	{
@@ -28,7 +28,7 @@ $a = 0;
 		if (!$pid) 
 	    {
 			//	find email address in address lists
-			echo "\n\n".date('Y-m-d h:m', $importtime)."working on: ". $accountName."\n";
+			//echo "\n\n".date('Y-m-d h:m', $importtime)."working on: ". $accountName."\n";
 			$result 	= getallContacts($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE);			
 //var_dump($result);
 			if(count($result) > 0)
