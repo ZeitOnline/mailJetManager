@@ -10,6 +10,6 @@ fi
 
 echo >$Lockfile
 cd /srv/mailJet-contacts/mailjet-contacts/public
-/usr/bin/php snyc_mailjetContacts.php.php  >> /var/log/mailjet/mailjetCOntactSync.log
+/usr/bin/php snyc_mailjetContacts.php  >> /var/log/mailjet/mailjetCOntactSync.log
 
 rm $Lockfile
