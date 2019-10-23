@@ -44,7 +44,7 @@
 
 			
 			# flag records for delete
-			pg_query($dbconn, "UPDATE $POSTGRE_TABLE SET isdeleted = '$importtime' WHERE accountname = '$accountName' AND importtime < '$importtime'") or die("Could not execute this delete statement: ".pg_last_error());
+			pg_query($dbconn, "UPDATE $POSTGRE_TABLE SET isdeletedat = '$importtime' WHERE accountname = '$accountName' AND importtime < '$importtime'") or die("Could not execute this delete statement: ".pg_last_error());
 
 			# Delete all records from account which where flagged to delete
 			pg_query($dbconn, "DELETE FROM $POSTGRE_TABLE WHERE accountname = '$accountName' AND isdeletedat+".$timeToDelete." < '$importtime'") or die("Could not execute this delete statement: ".pg_last_error());
