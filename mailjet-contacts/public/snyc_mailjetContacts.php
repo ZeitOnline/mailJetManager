@@ -14,7 +14,7 @@ $importtime = time();
 $l = 0;
 $a = 0;
 
-echo "\n\n".date('Y-m-d h:m', $importtime);
+echo "\n\nStarting script @".date('Y-m-d h:m', $importtime)."\n\n";
 // iterate through all API-Keys set in mailjet.conf
 	for($i=0; $i<count($MJ_KEYS); $i++)
 	{

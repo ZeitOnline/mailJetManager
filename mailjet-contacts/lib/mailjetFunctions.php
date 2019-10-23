@@ -81,7 +81,7 @@ function getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE)
 
 		$overallCount = 0;
 	}
-echo "\n... fetching ". $overallCount . " records ...";
+echo "\n... fetching ". $overallCount . " record details ...";
 	// now get all data and save it in array data
 	$tmpArray = false;
 	$data = array();
