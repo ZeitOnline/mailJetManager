@@ -131,7 +131,7 @@ function getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE,$importtime,$a
 		    	foreach($chunk as $record)
 		    	{
 		    		//	find adresslist to contact relations
-					echo "\n".$record['ContactID']."\n";
+					//echo "\n".$record['ContactID']."\n";
 					
 					$resultstat = getallContactListstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE, $record['ContactID']);
 					if(count($resultstat) > 0)
