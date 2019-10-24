@@ -142,7 +142,9 @@ function getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE,$importtime,$a
 					
 
 		    	}
+		    	//unset($chunk);
 		    	exit($b);
+
 		    }
 		    $b++;
 
