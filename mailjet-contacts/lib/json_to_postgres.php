@@ -50,6 +50,7 @@
 			pg_query($dbconn, "DELETE FROM $POSTGRE_TABLE WHERE accountname = '$accountName' AND isdeletedat+".$timeToDelete." < '$importtime'") or die("Could not execute this delete statement: ".pg_last_error());
 
 		}
+		pg_close($dbconn);
 		return 1;
 	}
 	
@@ -113,7 +114,7 @@
 
 			//pg_query($dbconn, "DELETE FROM $POSTGRE_TABLE WHERE accountname = '$accountName' AND importtime < '$importtime'") or die("Could not execute this delete statement: ".pg_last_error());
 
-	  
+	  		pg_close($dbconn);
 
 		}
 	}
@@ -223,6 +224,7 @@ hardbouncedcount = '".$psl['HardBouncedCount']."',
 	  
 
 		}
+		pg_close($dbconn);
 	}
 
 
