@@ -119,7 +119,7 @@ function getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE,$importtime,$a
     {
 		
     	// spilt into chunks for more perfromance
-		$datachunk = array_chunk($data, 10);
+		$datachunk = array_chunk($data, 50);
     	
     	foreach($datachunk as $chunk)
     	{
