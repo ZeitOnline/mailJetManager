@@ -112,34 +112,51 @@ function getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE,$importtime,$a
 	}
 	// fork a process and get relation data for each entry 
 	$a = 0;
+	$b = 0;
 	$pid = pcntl_fork();
 	if (!$pid) 
     {
 		echo "\n".date('Y-m-d h:m', $importtime)." working on contact to list relation: ". $accountName;
-    	foreach($data as $record)#
+    	// spilt into chunks for more perfromance
+		$datachunk = array_chunk($data, 10);
+    	
+    	foreach($datachunk as $chunk)
     	{
-    		//	find adresslist to contact relations
-			echo "\n".$record['ContactID']."\n";
-			
-			$resultstat = getallContactListstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE, $record['ContactID']);
-			if(count($resultstat) > 0)
+    		// fork a process for each chunk
+			$pid = pcntl_fork();
+			if (!$pid) 
 			{
-				//var_dump($resultstat);
-				$staus = storeContacts2Listsrelation($resultstat,$importtime,$accountName,$record['ContactID']);
-			}
-			
 
-    	}
+
+		    	foreach($chunk as $record)
+		    	{
+		    		//	find adresslist to contact relations
+					echo "\n".$record['ContactID']."\n";
+					
+					$resultstat = getallContactListstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE, $record['ContactID']);
+					if(count($resultstat) > 0)
+					{
+						//var_dump($resultstat);
+						$staus = storeContacts2Listsrelation($resultstat,$importtime,$accountName,$record['ContactID']);
+					}
+					
+
+		    	}
+		    	exit($b);
+		    }
+		    $b++;
+
+			while (pcntl_waitpid(0, $status) != -1) 
+		    {
+		        $status = pcntl_wexitstatus($status);
+		//				echo "Child $status completed\n";
+		    }  	
+		
+	    }
     	exit($a);
 	}	
 	$a++;
-/*
-	while (pcntl_waitpid(0, $status) != -1) 
-    {
-        $status = pcntl_wexitstatus($status);
-//				echo "Child $status completed\n";
-    }  	
-*/	
+
 	return $data;
 }
 

@@ -680,3 +680,7 @@ ubuntu-xenial login: [ 2027.166028] Out of memory: Kill process 8750 (php) score
 [ 2415.500486] Killed process 9306 (php) total-vm:330748kB, anon-rss:44196kB, file-rss:1664kB
 [ 2483.463748] Out of memory: Kill process 9180 (php) score 12 or sacrifice child
 [ 2483.467602] Killed process 9180 (php) total-vm:395808kB, anon-rss:45648kB, file-rss:1740kB
+[ 6931.197644] Out of memory: Kill process 10846 (php) score 152 or sacrifice child
+[ 6931.201891] Killed process 11088 (php) total-vm:884612kB, anon-rss:598156kB, file-rss:824kB
+[ 6932.223762] Out of memory: Kill process 10846 (php) score 152 or sacrifice child
+[ 6932.228915] Killed process 10846 (php) total-vm:884612kB, anon-rss:598156kB, file-rss:1040kB
