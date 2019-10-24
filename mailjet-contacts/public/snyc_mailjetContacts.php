@@ -44,7 +44,7 @@ echo "\n\nStarting script @".date('Y-m-d h:m', $importtime)."\n\n";
 		if (!$pid) 
 	    {
 			//	find Details of contacts
-			echo "\n\n".date('Y-m-d h:m', $importtime)." working on: ". $accountName."\n";
+			echo "\n".date('Y-m-d h:m', $importtime)." checking : ". $accountName."\n";
 			$resultstat = getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE,$importtime,$accountName);
 			if(count($resultstat) > 0)
 			{

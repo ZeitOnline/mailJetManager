@@ -106,6 +106,7 @@ function getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE,$importtime,$a
 		if($tmpArray)
 		{
 			$data = array_merge($data, $tmpArray);
+			echo "\n".date('Y-m-d h:m', $importtime)." working on contact to list relation: ". $accountName;
 			
 		}
 		
@@ -116,7 +117,7 @@ function getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE,$importtime,$a
 	$pid = pcntl_fork();
 	if (!$pid) 
     {
-		echo "\n".date('Y-m-d h:m', $importtime)." working on contact to list relation: ". $accountName;
+		
     	// spilt into chunks for more perfromance
 		$datachunk = array_chunk($data, 10);
     	
