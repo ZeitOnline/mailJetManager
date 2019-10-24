@@ -114,9 +114,10 @@
 
 			//pg_query($dbconn, "DELETE FROM $POSTGRE_TABLE WHERE accountname = '$accountName' AND importtime < '$importtime'") or die("Could not execute this delete statement: ".pg_last_error());
 
-	  		pg_close($dbconn2);
+	  		
 
 		}
+		pg_close($dbconn2);
 	}
 
 
