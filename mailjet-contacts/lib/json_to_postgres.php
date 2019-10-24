@@ -13,7 +13,7 @@
 	
 	function storeContacts($result,$importtime,$accountName)
     {
-    	include_once('../conf/postgres.conf'); 
+    	include('../conf/postgres.conf'); 
 		$POSTGRE_TABLE = $DB_TABLE_CONTACTS;
 		$dbconn = pg_connect("host=$DB_HOST dbname=$DB_NAME user=$DB_USER password=$DB_PASS")
 		    or die('Could not connect: ' . pg_last_error());
@@ -55,7 +55,7 @@
 	
 	function storeContactsDetails($resultstat,$importtime,$accountName)
 	{
-    	include_once('../conf/postgres.conf'); 
+    	include('../conf/postgres.conf'); 
 		$POSTGRE_TABLE = $DB_TABLE_CONTACTSDETAILS;
 		$dbconn = pg_connect("host=$DB_HOST dbname=$DB_NAME user=$DB_USER password=$DB_PASS")
 	    or die('Could not connect: ' . pg_last_error());
@@ -117,6 +117,116 @@
 
 		}
 	}
+
+
+
+
+	function storeContacts2Listsrelation($resultstat,$importtime,$accountName,$ContactID)
+	{
+    	include('../conf/postgres.conf'); 
+		$POSTGRE_TABLE = $DB_TABLE_CONTACTSLISTS;
+		$dbconn = pg_connect("host=$DB_HOST dbname=$DB_NAME user=$DB_USER password=$DB_PASS")
+	    or die('Could not connect: ' . pg_last_error());
+
+		# Iterate our records details
+		foreach($resultstat as $psl)
+		{
+			
+			# Sanatize response from endpoint contactstatistics
+			/*
+			    CONSTRAINT accountname_contactid UNIQUE (contactid, accountname)
+			    importtime BIGINT,
+			    accountname CHARACTER VARYING(250),
+			    ["BlockedCount"]=>
+			    int(0)
+			    ["BouncedCount"]=>
+			    int(0)
+			    ["ClickedCount"]=>
+			    int(0)
+			    ["ContactID"]=>
+			    int(1863415158)
+			    ["DeferredCount"]=>
+			    int(0)
+			    ["DeliveredCount"]=> '".$ps['DeliveredCount']."',
+			    int(0)
+			    ["HardBouncedCount"]=>
+			    int(0)
+			    ["LastActivityAt"]=>
+			    string(0) ""
+			    ["MarketingContacts"]=>
+			    int(0)
+			    ["OpenedCount"]=>
+			    int(0)
+			    ["PreQueuedCount"]=>
+			    int(0)
+			    ["ProcessedCount"]=>
+			    int(0)
+			    ["QueuedCount"]=>
+			    int(0)
+			    ["SoftBouncedCount"]=>
+			    int(0)
+			    ["SpamComplaintCount"]=>
+			    int(0)
+			    ["UnsubscribedCount"]=>
+			    int(0)
+			    ["UserMarketingContacts"]=>
+			    int(0)
+			    ["WorkFlowExitedCount"]=>
+			    int(0)
+			 */
+			# Insert or update DB
+			pg_query($dbconn, "INSERT INTO $POSTGRE_TABLE (importtime,accountname,blockedcount,bouncedcount,clickedcount,contactid,deferredcount,deliveredcount,hardbouncedcount,lastactivityat, listrecipientid,openedcount,prequeuedcount,processedcount,queuedcount,softbouncedcount,spamcomplaintcount,unsubscribedcount,workflowexitedcount) VALUES 
+				('".$importtime."',
+ '".$accountName."',
+ '".$psl['BlockedCount']."',
+ '".$psl['BouncedCount']."',
+ '".$psl['ClickedCount']."',
+ '".$ContactID."',
+ '".$psl['DeferredCount']."',
+ '".$psl['DeliveredCount']."',
+ '".$psl['HardBouncedCount']."',
+  '".$psl['LastActivityAt']."',
+  '".$psl['ListRecipientID']."',
+  '".$psl['OpenedCount']."',
+  '".$psl['PreQueuedCount']."',
+  '".$psl['ProcessedCount']."',
+  '".$psl['QueuedCount']."',
+  '".$psl['SoftBouncedCount']."',
+  '".$psl['SpamComplaintCount']."',
+ '".$psl['UnsubscribedCount']."',
+ '".$psl['WorkFlowExitedCount']."') 
+
+				ON CONFLICT ON CONSTRAINT accountname_listrecipientid DO UPDATE SET importtime = '".$importtime."',
+ accountname = '".$accountName."',
+ blockedcount = '".$psl['BlockedCount']."',
+ bouncedcount = '".$psl['BouncedCount']."',
+clickedcount = '".$psl['ClickedCount']."',
+ contactid = '".$ContactID."',
+ deferredcount = '".$psl['DeferredCount']."',
+ deliveredcount = '".$psl['DeliveredCount']."',
+hardbouncedcount = '".$psl['HardBouncedCount']."',
+  lastactivityat = '".$psl['LastActivityAt']."',
+  listrecipientid =  '".$psl['ListRecipientID']."',
+ openedcount =  '".$psl['OpenedCount']."',
+ prequeuedcount = '".$psl['PreQueuedCount']."',
+ processedcount = '".$psl['ProcessedCount']."',
+ queuedcount = '".$psl['QueuedCount']."',
+ softbouncedcount = '".$psl['SoftBouncedCount']."',
+ spamcomplaintcount = '".$psl['SpamComplaintCount']."',
+ unsubscribedcount = '".$psl['UnsubscribedCount']."',
+ workflowexitedcount = '".$psl['WorkFlowExitedCount']."' ;") or die("Could not execute this insert statement: ".pg_last_error());
+
+			# Delete all records from account which where not present in json file by importtime
+
+			//pg_query($dbconn, "DELETE FROM $POSTGRE_TABLE WHERE accountname = '$accountName' AND importtime < '$importtime'") or die("Could not execute this delete statement: ".pg_last_error());
+
+	  
+
+		}
+	}
+
+
+
 /*
 	
 		

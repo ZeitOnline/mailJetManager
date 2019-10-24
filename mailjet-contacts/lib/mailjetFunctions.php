@@ -34,8 +34,11 @@ function getallContacts($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE)
 	{
 
 		$overallCount = 0;
+	}else
+	{
+		echo "\n... fetching ". $overallCount . " records ...";	
 	}
-echo "\n... fetching ". $overallCount . " records ...";
+	
 	// now get all data and save it in array data
 	$tmpArray = false;
 	$data = array();
@@ -45,7 +48,7 @@ echo "\n... fetching ". $overallCount . " records ...";
 	// declare filter with 1000 records (whichb ist maximum) and offset for next loop run
 		$filters = [
 	  				'Limit' => 1000,
-	  				'offset' => $callno*1000
+	  				'Offset' => $callno*1000
 					];
 
 
@@ -61,7 +64,7 @@ echo "\n... fetching ". $overallCount . " records ...";
 }
 
 
-function getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE)
+function getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE,$importtime,$accountName)
 {
 
 
@@ -80,8 +83,11 @@ function getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE)
 	{
 
 		$overallCount = 0;
+	}else
+	{
+		echo "\n... fetching ". $overallCount . " record details ...";	
 	}
-echo "\n... fetching ". $overallCount . " record details ...";
+
 	// now get all data and save it in array data
 	$tmpArray = false;
 	$data = array();
@@ -91,20 +97,77 @@ echo "\n... fetching ". $overallCount . " record details ...";
 	// declare filter with 1000 records (whichb ist maximum) and offset for next loop run
 		$filters = [
 	  				'Limit' => 1000,
-	  				'offset' => $callno*1000
+	  				'Offset' => $callno*1000
 					];
 
 
 		$response = $mj->get(Resources::$Contactstatistics, ['filters' => $filters]);
 		$response->success() && $tmpArray = $response->getData();
 		if($tmpArray)
+		{
 			$data = array_merge($data, $tmpArray);
-		
+			
+		}
 		
 	}
+	// fork a process and get relation data for each entry 
+	$a = 0;
+	$pid = pcntl_fork();
+	if (!$pid) 
+    {
+		echo "\n".date('Y-m-d h:m', $importtime)." working on contact to list relation: ". $accountName;
+    	foreach($data as $record)#
+    	{
+    		//	find adresslist to contact relations
+			echo "\n".$record['ContactID']."\n";
+			
+			$resultstat = getallContactListstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE, $record['ContactID']);
+			if(count($resultstat) > 0)
+			{
+				//var_dump($resultstat);
+				$staus = storeContacts2Listsrelation($resultstat,$importtime,$accountName,$record['ContactID']);
+			}
+			
+
+    	}
+    	exit($a);
+	}	
+	$a++;
+/*
+	while (pcntl_waitpid(0, $status) != -1) 
+    {
+        $status = pcntl_wexitstatus($status);
+//				echo "Child $status completed\n";
+    }  	
+*/	
+	return $data;
+}
+
+
+
+function getallContactListstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE,$ContactID)
+{
+
+
+	$mj = new \Mailjet\Client($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE);
+
+	// now get contact to list relations and store them
+	$data = array();
+	
+		$filters = [
+	  				'Contact' => $ContactID,
+	  				'ShowExtraData' => true
+					];
+
+
+		$response = $mj->get(Resources::$Listrecipientstatistics, ['filters' => $filters]);
+		$response->success() && $data = $response->getData();
+		
+		
 	
 	return $data;
 }
+
 
 
 

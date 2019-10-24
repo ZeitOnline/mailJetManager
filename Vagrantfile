@@ -14,6 +14,14 @@ $script = <<SCRIPT
       apt-get install -y php php-pgsql
       apt-get install -y postgresql libpq5 postgresql-9.5 postgresql-client-9.5 postgresql-client-common postgresql-contrib phppgadmin
 
+      wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
+      apt-get -y install postgresql-9.5-cron 
+      # add to postgresql.conf:
+      #shared_preload_libraries = 'pg_cron'
+      #cron.database_name = 'postgres'
+
+
       echo "sudo -i -u postgres
       $ psql# CREATE USER root WITH PASSWORD 'root';
       # CREATE DATABASE "test";

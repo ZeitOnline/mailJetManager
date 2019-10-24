@@ -43,9 +43,9 @@ echo "\n\nStarting script @".date('Y-m-d h:m', $importtime)."\n\n";
 		$pid = pcntl_fork();
 		if (!$pid) 
 	    {
-			//	find email address in address lists
-			echo "\n\n".date('Y-m-d h:m', $importtime)."working on details: ". $accountName."\n";
-			$resultstat = getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE);
+			//	find Details of contacts
+			echo "\n\n".date('Y-m-d h:m', $importtime)." working on: ". $accountName."\n";
+			$resultstat = getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE,$importtime,$accountName);
 			if(count($resultstat) > 0)
 			{
 				$staus = storeContactsDetails($resultstat,$importtime,$accountName);
@@ -53,6 +53,7 @@ echo "\n\nStarting script @".date('Y-m-d h:m', $importtime)."\n\n";
 		exit($a);
 		}
 		$a++;
+
 
 	echo "\n";
 	}
