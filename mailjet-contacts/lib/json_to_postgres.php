@@ -15,7 +15,7 @@
     {
     	include('../conf/postgres.conf'); 
 		$POSTGRE_TABLE = $DB_TABLE_CONTACTS;
-		$dbconn = pg_connect("host=$DB_HOST dbname=$DB_NAME user=$DB_USER password=$DB_PASS")
+		$dbconn1 = pg_connect("host=$DB_HOST dbname=$DB_NAME user=$DB_USER password=$DB_PASS")
 		    or die('Could not connect: ' . pg_last_error());
 
 		# Iterate our records
@@ -40,17 +40,17 @@
 
 
 			# Insert or update DB
-			pg_query($dbconn, "INSERT INTO $POSTGRE_TABLE (importtime,accountname,createdat,deliveredcount,email,exclusionfromcampaignsupdatedat,id,isexcludedfromcampaigns,isoptinpending,isspamcomplaining,lastactivityat,lastupdateat,name,unsubscribedat,unsubscribedby) VALUES ('".$importtime."', '".$accountName."', '".$p['CreatedAt']."', '".$p['DeliveredCount']."', '".$p['Email']."', '".$p['ExclusionFromCampaignsUpdatedAt']."','".$p['ID']."', '".$p['IsExcludedFromCampaigns']."', '".$p['IsOptInPending']."', '".$p['IsSpamComplaining']."', '".$p['LastActivityAt']."', '".$p['LastUpdateAt']."', '".$p['Name']."', '".$p['UnsubscribedAt']."', '".$p['UnsubscribedBy']."') ON CONFLICT ON CONSTRAINT accountname_email DO UPDATE SET importtime = '".$importtime."', accountname = '".$accountName."', createdat = '".$p['CreatedAt']."', deliveredcount = '".$p['DeliveredCount']."', email = '".$p['Email']."', exclusionfromcampaignsupdatedat = '".$p['ExclusionFromCampaignsUpdatedAt']."', id = '".$p['ID']."', isexcludedfromcampaigns = '".$p['IsExcludedFromCampaigns']."', isoptinpending = '".$p['IsOptInPending']."', isspamcomplaining = '".$p['IsSpamComplaining']."', lastactivityat = '".$p['LastActivityAt']."', lastupdateat = '".$p['LastUpdateAt']."', name = '".$p['Name']."', unsubscribedat = '".$p['UnsubscribedAt']."', unsubscribedby = '".$p['UnsubscribedBy']."' ;") or die("Could not execute this insert statement: ".pg_last_error());
+			pg_query($dbconn1, "INSERT INTO $POSTGRE_TABLE (importtime,accountname,createdat,deliveredcount,email,exclusionfromcampaignsupdatedat,id,isexcludedfromcampaigns,isoptinpending,isspamcomplaining,lastactivityat,lastupdateat,name,unsubscribedat,unsubscribedby) VALUES ('".$importtime."', '".$accountName."', '".$p['CreatedAt']."', '".$p['DeliveredCount']."', '".$p['Email']."', '".$p['ExclusionFromCampaignsUpdatedAt']."','".$p['ID']."', '".$p['IsExcludedFromCampaigns']."', '".$p['IsOptInPending']."', '".$p['IsSpamComplaining']."', '".$p['LastActivityAt']."', '".$p['LastUpdateAt']."', '".$p['Name']."', '".$p['UnsubscribedAt']."', '".$p['UnsubscribedBy']."') ON CONFLICT ON CONSTRAINT accountname_email DO UPDATE SET importtime = '".$importtime."', accountname = '".$accountName."', createdat = '".$p['CreatedAt']."', deliveredcount = '".$p['DeliveredCount']."', email = '".$p['Email']."', exclusionfromcampaignsupdatedat = '".$p['ExclusionFromCampaignsUpdatedAt']."', id = '".$p['ID']."', isexcludedfromcampaigns = '".$p['IsExcludedFromCampaigns']."', isoptinpending = '".$p['IsOptInPending']."', isspamcomplaining = '".$p['IsSpamComplaining']."', lastactivityat = '".$p['LastActivityAt']."', lastupdateat = '".$p['LastUpdateAt']."', name = '".$p['Name']."', unsubscribedat = '".$p['UnsubscribedAt']."', unsubscribedby = '".$p['UnsubscribedBy']."' ;") or die("Could not execute this insert statement: ".pg_last_error());
 
 			
 			# flag records for delete
-			pg_query($dbconn, "UPDATE $POSTGRE_TABLE SET isdeletedat = '$importtime' WHERE accountname = '$accountName' AND importtime < '$importtime'") or die("Could not execute this delete statement: ".pg_last_error());
+			pg_query($dbconn1, "UPDATE $POSTGRE_TABLE SET isdeletedat = '$importtime' WHERE accountname = '$accountName' AND importtime < '$importtime'") or die("Could not execute this delete statement: ".pg_last_error());
 
 			# Delete all records from account which where flagged to delete
-			pg_query($dbconn, "DELETE FROM $POSTGRE_TABLE WHERE accountname = '$accountName' AND isdeletedat+".$timeToDelete." < '$importtime'") or die("Could not execute this delete statement: ".pg_last_error());
+			pg_query($dbconn1, "DELETE FROM $POSTGRE_TABLE WHERE accountname = '$accountName' AND isdeletedat+".$timeToDelete." < '$importtime'") or die("Could not execute this delete statement: ".pg_last_error());
 
 		}
-		pg_close($dbconn);
+		pg_close($dbconn1);
 		return 1;
 	}
 	
@@ -58,7 +58,7 @@
 	{
     	include('../conf/postgres.conf'); 
 		$POSTGRE_TABLE = $DB_TABLE_CONTACTSDETAILS;
-		$dbconn = pg_connect("host=$DB_HOST dbname=$DB_NAME user=$DB_USER password=$DB_PASS")
+		$dbconn2 = pg_connect("host=$DB_HOST dbname=$DB_NAME user=$DB_USER password=$DB_PASS")
 	    or die('Could not connect: ' . pg_last_error());
 
 		# Iterate our records details
@@ -108,13 +108,13 @@
 			    int(0)
 			 */
 			# Insert or update DB
-			pg_query($dbconn, "INSERT INTO $POSTGRE_TABLE (importtime,accountname,blockedcount,bouncedcount,clickedcount,contactid,deferredcount,deliveredcount,hardbouncedcount,lastactivityat,marketingcontacts,openedcount,prequeuedcount,processedcount,queuedcount,softbouncedcount,spamcomplaintcount,unsubscribedcount,usermarketingcontacts,workflowexitedcount) VALUES ('".$importtime."', '".$accountName."', '".$ps['BlockedCount']."', '".$ps['BouncedCount']."', '".$ps['ClickedCount']."', '".$ps['ContactID']."', '".$ps['DeferredCount']."', '".$ps['DeliveredCount']."', '".$ps['HardBouncedCount']."',  '".$ps['LastActivityAt']."',  '".$ps['MarketingContacts']."',  '".$ps['OpenedCount']."',  '".$ps['PreQueuedCount']."',  '".$ps['ProcessedCount']."',  '".$ps['QueuedCount']."',  '".$ps['SoftBouncedCount']."',  '".$ps['SpamComplaintCount']."', '".$ps['UnsubscribedCount']."',  '".$ps['UserMarketingContacts']."', '".$ps['WorkFlowExitedCount']."') ON CONFLICT ON CONSTRAINT accountname_contactid DO UPDATE SET importtime = '".$importtime."', accountname = '".$accountName."', blockedcount = '".$ps['BlockedCount']."', bouncedcount = '".$ps['BouncedCount']."',clickedcount = '".$ps['ClickedCount']."', contactid = '".$ps['ContactID']."', deferredcount = '".$ps['DeferredCount']."', deliveredcount = '".$ps['DeliveredCount']."',hardbouncedcount = '".$ps['HardBouncedCount']."',  lastactivityat = '".$ps['LastActivityAt']."',  marketingcontacts =  '".$ps['MarketingContacts']."', openedcount =  '".$ps['OpenedCount']."', prequeuedcount = '".$ps['PreQueuedCount']."', processedcount = '".$ps['ProcessedCount']."', queuedcount = '".$ps['QueuedCount']."', softbouncedcount = '".$ps['SoftBouncedCount']."', spamcomplaintcount = '".$ps['SpamComplaintCount']."', unsubscribedcount = '".$ps['UnsubscribedCount']."', usermarketingcontacts = '".$ps['UserMarketingContacts']."', workflowexitedcount = '".$ps['WorkFlowExitedCount']."' ;") or die("Could not execute this insert statement: ".pg_last_error());
+			pg_query($dbconn2, "INSERT INTO $POSTGRE_TABLE (importtime,accountname,blockedcount,bouncedcount,clickedcount,contactid,deferredcount,deliveredcount,hardbouncedcount,lastactivityat,marketingcontacts,openedcount,prequeuedcount,processedcount,queuedcount,softbouncedcount,spamcomplaintcount,unsubscribedcount,usermarketingcontacts,workflowexitedcount) VALUES ('".$importtime."', '".$accountName."', '".$ps['BlockedCount']."', '".$ps['BouncedCount']."', '".$ps['ClickedCount']."', '".$ps['ContactID']."', '".$ps['DeferredCount']."', '".$ps['DeliveredCount']."', '".$ps['HardBouncedCount']."',  '".$ps['LastActivityAt']."',  '".$ps['MarketingContacts']."',  '".$ps['OpenedCount']."',  '".$ps['PreQueuedCount']."',  '".$ps['ProcessedCount']."',  '".$ps['QueuedCount']."',  '".$ps['SoftBouncedCount']."',  '".$ps['SpamComplaintCount']."', '".$ps['UnsubscribedCount']."',  '".$ps['UserMarketingContacts']."', '".$ps['WorkFlowExitedCount']."') ON CONFLICT ON CONSTRAINT accountname_contactid DO UPDATE SET importtime = '".$importtime."', accountname = '".$accountName."', blockedcount = '".$ps['BlockedCount']."', bouncedcount = '".$ps['BouncedCount']."',clickedcount = '".$ps['ClickedCount']."', contactid = '".$ps['ContactID']."', deferredcount = '".$ps['DeferredCount']."', deliveredcount = '".$ps['DeliveredCount']."',hardbouncedcount = '".$ps['HardBouncedCount']."',  lastactivityat = '".$ps['LastActivityAt']."',  marketingcontacts =  '".$ps['MarketingContacts']."', openedcount =  '".$ps['OpenedCount']."', prequeuedcount = '".$ps['PreQueuedCount']."', processedcount = '".$ps['ProcessedCount']."', queuedcount = '".$ps['QueuedCount']."', softbouncedcount = '".$ps['SoftBouncedCount']."', spamcomplaintcount = '".$ps['SpamComplaintCount']."', unsubscribedcount = '".$ps['UnsubscribedCount']."', usermarketingcontacts = '".$ps['UserMarketingContacts']."', workflowexitedcount = '".$ps['WorkFlowExitedCount']."' ;") or die("Could not execute this insert statement: ".pg_last_error());
 
 			# Delete all records from account which where not present in json file by importtime
 
 			//pg_query($dbconn, "DELETE FROM $POSTGRE_TABLE WHERE accountname = '$accountName' AND importtime < '$importtime'") or die("Could not execute this delete statement: ".pg_last_error());
 
-	  		pg_close($dbconn);
+	  		pg_close($dbconn2);
 
 		}
 	}
@@ -126,7 +126,7 @@
 	{
     	include('../conf/postgres.conf'); 
 		$POSTGRE_TABLE = $DB_TABLE_CONTACTSLISTS;
-		$dbconn = pg_connect("host=$DB_HOST dbname=$DB_NAME user=$DB_USER password=$DB_PASS")
+		$dbconn3 = pg_connect("host=$DB_HOST dbname=$DB_NAME user=$DB_USER password=$DB_PASS")
 	    or die('Could not connect: ' . pg_last_error());
 
 		# Iterate our records details
@@ -176,7 +176,7 @@
 			    int(0)
 			 */
 			# Insert or update DB
-			pg_query($dbconn, "INSERT INTO $POSTGRE_TABLE (importtime,accountname,blockedcount,bouncedcount,clickedcount,contactid,deferredcount,deliveredcount,hardbouncedcount,lastactivityat, listrecipientid,openedcount,prequeuedcount,processedcount,queuedcount,softbouncedcount,spamcomplaintcount,unsubscribedcount,workflowexitedcount) VALUES 
+			pg_query($dbconn3, "INSERT INTO $POSTGRE_TABLE (importtime,accountname,blockedcount,bouncedcount,clickedcount,contactid,deferredcount,deliveredcount,hardbouncedcount,lastactivityat, listrecipientid,openedcount,prequeuedcount,processedcount,queuedcount,softbouncedcount,spamcomplaintcount,unsubscribedcount,workflowexitedcount) VALUES 
 				('".$importtime."',
  '".$accountName."',
  '".$psl['BlockedCount']."',
@@ -224,7 +224,7 @@ hardbouncedcount = '".$psl['HardBouncedCount']."',
 	  
 
 		}
-		pg_close($dbconn);
+		pg_close($dbconn3);
 	}
 
 
