@@ -54,6 +54,8 @@
 		pg_close($dbconn1);
 		return 1;
 	}
+
+	
 	
 	function storeContactsDetails($resultstat,$importtime,$accountName)
 	{
@@ -229,6 +231,19 @@ hardbouncedcount = '".$psl['HardBouncedCount']."',
 		pg_close($dbconn3);
 	}
 
+function cleanupContacts()
+	{
+		include('../conf/postgres.conf'); 
+		$POSTGRE_TABLE = $DB_TABLE_CONTACTS;
+		$dbconn4 = pg_connect("host=$DB_HOST dbname=$DB_NAME user=$DB_USER password=$DB_PASS") or die('Could not connect: ' . pg_last_error());
+
+		pg_query($dbconn1, "UPDATE $POSTGRE_TABLE SET isdeletedat = '$importtime' WHERE importtime < '$importtime'") or die("Could not execute update delete statement: ".pg_last_error());
+
+		# Delete all records from account which where flagged to delete
+		pg_query($dbconn1, "DELETE FROM $POSTGRE_TABLE  isdeletedat+".$timeToDelete." < '$importtime'") or die("Could not execute this delete statement: ".pg_last_error());
+		pg_close($dbconn4);
+		return true;
+	}
 
 
 /*

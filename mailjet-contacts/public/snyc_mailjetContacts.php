@@ -62,6 +62,9 @@ echo "\n\nStarting script @".date('Y-m-d h:m', $importtime)."\n\n";
         {
             $status = pcntl_wexitstatus($status);
 //				echo "Child $status completed\n";
-        }  
+        } 
+
+     // cleanup 
+     $done = cleanupContacts(); 
 
 ?>
