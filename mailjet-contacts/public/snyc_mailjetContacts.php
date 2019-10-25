@@ -65,6 +65,10 @@ echo "\n\nStarting script @".date('Y-m-d h:m', $importtime)."\n\n";
         } 
 
      // cleanup 
+     echo "\ncleanup deleted contacts";
      $done = cleanupContacts(); 
+     if( $done)
+     	echo "finished";
+     
 
 ?>
