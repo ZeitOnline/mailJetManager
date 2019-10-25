@@ -92,6 +92,7 @@ function getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE,$importtime,$a
 	$tmpArray = false;
 	$data = array();
 	$loops = $overallCount/1000;
+
 	for($callno=0; $callno < $loops; $callno++)
 	{
 	// declare filter with 1000 records (whichb ist maximum) and offset for next loop run
@@ -106,20 +107,19 @@ function getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE,$importtime,$a
 		if($tmpArray)
 		{
 			$data = array_merge($data, $tmpArray);
-			echo "\n".date('Y-m-d h:m', $importtime)." working on contact to list relation: ". $accountName;
-			
 		}
 		
 	}
 	// fork a process and get relation data for each entry 
 	$a = 0;
 	$b = 0;
+	echo "\n".date('Y-m-d h:m', $importtime)." working on contact to list relation: ". $accountName;
 	$pid = pcntl_fork();
 	if (!$pid) 
     {
 		
     	// spilt into chunks for more perfromance
-		$datachunk = array_chunk($data, 50);
+		$datachunk = array_chunk($data, 100);
     	
     	foreach($datachunk as $chunk)
     	{
@@ -164,7 +164,7 @@ function getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE,$importtime,$a
         $status = pcntl_wexitstatus($status);
 //				echo "Child $status completed\n";
     } 
-
+    echo "\n". $accountName . " finished";
 	return $data;
 }
 
