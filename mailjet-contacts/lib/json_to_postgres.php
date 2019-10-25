@@ -43,11 +43,12 @@
 			pg_query($dbconn1, "INSERT INTO $POSTGRE_TABLE (importtime,accountname,createdat,deliveredcount,email,exclusionfromcampaignsupdatedat,id,isexcludedfromcampaigns,isoptinpending,isspamcomplaining,lastactivityat,lastupdateat,name,unsubscribedat,unsubscribedby) VALUES ('".$importtime."', '".$accountName."', '".$p['CreatedAt']."', '".$p['DeliveredCount']."', '".$p['Email']."', '".$p['ExclusionFromCampaignsUpdatedAt']."','".$p['ID']."', '".$p['IsExcludedFromCampaigns']."', '".$p['IsOptInPending']."', '".$p['IsSpamComplaining']."', '".$p['LastActivityAt']."', '".$p['LastUpdateAt']."', '".$p['Name']."', '".$p['UnsubscribedAt']."', '".$p['UnsubscribedBy']."') ON CONFLICT ON CONSTRAINT accountname_email DO UPDATE SET importtime = '".$importtime."', accountname = '".$accountName."', createdat = '".$p['CreatedAt']."', deliveredcount = '".$p['DeliveredCount']."', email = '".$p['Email']."', exclusionfromcampaignsupdatedat = '".$p['ExclusionFromCampaignsUpdatedAt']."', id = '".$p['ID']."', isexcludedfromcampaigns = '".$p['IsExcludedFromCampaigns']."', isoptinpending = '".$p['IsOptInPending']."', isspamcomplaining = '".$p['IsSpamComplaining']."', lastactivityat = '".$p['LastActivityAt']."', lastupdateat = '".$p['LastUpdateAt']."', name = '".$p['Name']."', unsubscribedat = '".$p['UnsubscribedAt']."', unsubscribedby = '".$p['UnsubscribedBy']."' ;") or die("Could not execute contact insert statement: ".pg_last_error());
 
 			
-			# flag records for delete
+			/* flag records for delete
 			pg_query($dbconn1, "UPDATE $POSTGRE_TABLE SET isdeletedat = '$importtime' WHERE accountname = '$accountName' AND importtime < '$importtime'") or die("Could not execute update delete statement: ".pg_last_error());
 
 			# Delete all records from account which where flagged to delete
 			pg_query($dbconn1, "DELETE FROM $POSTGRE_TABLE WHERE accountname = '$accountName' AND isdeletedat+".$timeToDelete." < '$importtime'") or die("Could not execute this delete statement: ".pg_last_error());
+			*/
 
 		}
 		pg_close($dbconn1);
