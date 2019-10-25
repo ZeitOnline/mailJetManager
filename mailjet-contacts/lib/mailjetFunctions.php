@@ -159,6 +159,11 @@ function getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE,$importtime,$a
     	exit($a);
 	}	
 	$a++;
+	while (pcntl_waitpid(0, $status) != -1) 
+    {
+        $status = pcntl_wexitstatus($status);
+//				echo "Child $status completed\n";
+    } 
 
 	return $data;
 }
