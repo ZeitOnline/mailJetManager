@@ -231,7 +231,7 @@ hardbouncedcount = '".$psl['HardBouncedCount']."',
 		pg_close($dbconn3);
 	}
 
-function cleanupContacts()
+function cleanupContacts($importtime,$timeToDelete)
 	{
 		include('../conf/postgres.conf'); 
 		$POSTGRE_TABLE = $DB_TABLE_CONTACTS;
