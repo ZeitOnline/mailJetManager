@@ -114,56 +114,49 @@ function getallContactstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE,$importtime,$a
 	$a = 0;
 	$b = 0;
 	echo "\n".date('Y-m-d h:m', $importtime)." working on contact to list relation: ". $accountName;
-	$pid = pcntl_fork();
-	if (!$pid) 
-    {
+	
 		
-    	// spilt into chunks for more perfromance
-		$datachunk = array_chunk($data, 100);
-    	
-    	foreach($datachunk as $chunk)
-    	{
-    		// fork a process for each chunk
-			$pid = pcntl_fork();
-			if (!$pid) 
-			{
+	// spilt into chunks for more perfromance
+	$datachunk = array_chunk($data, 30);
+	
+	foreach($datachunk as $chunk)
+	{
+		// fork a process for each chunk
+		$pid = pcntl_fork();
+		if (!$pid) 
+		{
 
 
-		    	foreach($chunk as $record)
-		    	{
-		    		//	find adresslist to contact relations
-					//echo "\n".$record['ContactID']."\n";
-					
-					$resultstat = getallContactListstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE, $record['ContactID']);
-					if(count($resultstat) > 0)
-					{
-						//var_dump($resultstat);
-						$staus = storeContacts2Listsrelation($resultstat,$importtime,$accountName,$record['ContactID']);
-					}
-					
+	    	foreach($chunk as $record)
+	    	{
+	    		//	find adresslist to contact relations
+				//echo "\n".$record['ContactID']."\n";
+				
+				$resultstat = getallContactListstats($MJ_APIKEY_PUBLIC, $MJ_APIKEY_PRIVATE, $record['ContactID']);
+				if(count($resultstat) > 0)
+				{
+					//var_dump($resultstat);
+					$staus = storeContacts2Listsrelation($resultstat,$importtime,$accountName,$record['ContactID']);
+				}
+				
 
-		    	}
-		    	//unset($chunk);
-		    	exit($b);
+	    	}
+	    	//unset($chunk);
+	    	exit($b);
 
-		    }
-		    $b++;
-/*
-			while (pcntl_waitpid(0, $status) != -1) 
-		    {
-		        $status = pcntl_wexitstatus($status);
-		//				echo "Child $status completed\n";
-		    }  	
-*/		
 	    }
-    	exit($a);
-	}	
-	$a++;
-	while (pcntl_waitpid(0, $status) != -1) 
-    {
-        $status = pcntl_wexitstatus($status);
-//				echo "Child $status completed\n";
-    } 
+	    $b++;
+
+		while (pcntl_waitpid(0, $status) != -1) 
+	    {
+	        $status = pcntl_wexitstatus($status);
+	//				echo "Child $status completed\n";
+	    }  	
+	
+    }
+
+		
+	
     echo "\n". $accountName . " finished";
 	return $data;
 }
